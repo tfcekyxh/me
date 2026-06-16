@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/tmp/**)",
+      "Bash(bun create *)",
+      "Bash(cp -r /tmp/temp-vite/* /c/Users/六件套/IdeaProjects/me/)",
+      "Bash(cp /tmp/temp-vite/.gitignore /c/Users/六件套/IdeaProjects/me/)",
+      "Bash(bun add *)",
+      "Bash(bun run *)",
+      "Bash(bun dev *)"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "wechat"
+  ]
+}
