@@ -1,4 +1,5 @@
 import { Mail } from 'lucide-react'
+import { AnimatedSection } from './AnimatedSection'
 
 const SOCIAL_LINKS = [
   { label: '邮箱', href: 'mailto:2073887899@qq.com', icon: Mail, value: '2073887899@qq.com' },
@@ -7,7 +8,7 @@ const SOCIAL_LINKS = [
 export function Contact() {
   return (
     <section id="contact" className="px-4 sm:px-6 lg:px-8 py-24">
-      <div className="mx-auto max-w-2xl text-center">
+      <AnimatedSection className="mx-auto max-w-2xl text-center">
         <h2 className="mb-12 text-3xl font-semibold tracking-tight text-gray-900 dark:text-gray-100">
           联系方式
         </h2>
@@ -31,7 +32,7 @@ export function Contact() {
         <p className="mt-10 text-sm text-gray-400">
           GitHub / LinkedIn 待补充
         </p>
-      </div>
+      </AnimatedSection>
     </section>
   )
 }

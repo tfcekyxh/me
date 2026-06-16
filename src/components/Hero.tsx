@@ -1,10 +1,12 @@
+import { AnimatedSection } from './AnimatedSection'
+
 export function Hero() {
   return (
     <section
       id="hero"
       className="min-h-screen flex items-center px-4 sm:px-6 lg:px-8"
     >
-      <div className="mx-auto max-w-2xl">
+      <AnimatedSection className="mx-auto max-w-2xl">
         {/* avatar placeholder */}
         <div className="mb-8 flex justify-center md:justify-start">
           <div className="flex h-28 w-28 items-center justify-center rounded-full bg-gray-200 text-4xl font-medium text-gray-500 dark:bg-gray-800 dark:text-gray-400 md:h-32 md:w-32">
@@ -36,7 +38,7 @@ export function Hero() {
             相信技术是为了解决实际问题而存在的，不喜欢为了炫技而引入不必要的复杂度。业余时间偶尔画产品原型图，对产品设计也有一定兴趣。
           </p>
         </div>
-      </div>
+      </AnimatedSection>
     </section>
   )
 }

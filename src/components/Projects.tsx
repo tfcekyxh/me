@@ -1,5 +1,6 @@
 import { ExternalLink, Link2 } from 'lucide-react'
 import { projects } from '../data/projects'
+import { AnimatedSection } from './AnimatedSection'
 
 function ProjectCard({
   name,
@@ -55,7 +56,7 @@ function ProjectCard({
 export function Projects() {
   return (
     <section id="projects" className="px-4 sm:px-6 lg:px-8 py-24">
-      <div className="mx-auto max-w-4xl">
+      <AnimatedSection className="mx-auto max-w-4xl">
         <h2 className="mb-12 text-center text-3xl font-semibold tracking-tight text-gray-900 dark:text-gray-100">
           项目作品
         </h2>
@@ -69,7 +70,7 @@ export function Projects() {
         <p className="mt-8 text-center text-sm text-gray-400">
           以上为占位项目，真实项目信息待替换
         </p>
-      </div>
+      </AnimatedSection>
     </section>
   )
 }

@@ -1,9 +1,10 @@
 import { skillCategories } from '../data/skills'
+import { AnimatedSection } from './AnimatedSection'
 
 export function Skills() {
   return (
     <section id="skills" className="px-4 sm:px-6 lg:px-8 py-24">
-      <div className="mx-auto max-w-2xl">
+      <AnimatedSection className="mx-auto max-w-2xl">
         <h2 className="mb-12 text-center text-3xl font-semibold tracking-tight text-gray-900 dark:text-gray-100">
           技能
         </h2>
@@ -31,7 +32,7 @@ export function Skills() {
             </div>
           ))}
         </div>
-      </div>
+      </AnimatedSection>
     </section>
   )
 }
