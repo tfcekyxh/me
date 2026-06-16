@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <script>
+      // Prevent theme flash
+      (function(){
+        var t = localStorage.getItem('theme');
+        if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/me/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>六件套 - 全栈工程师</title>
+    <script type="module" crossorigin src="/me/assets/index-DVfCUUil.js"></script>
+    <link rel="stylesheet" crossorigin href="/me/assets/index-m53nA6wt.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
