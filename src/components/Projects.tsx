@@ -33,6 +33,8 @@ function ProjectCard({
         {githubUrl && (
           <a
             href={githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-1 text-sm text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
           >
             <Link2 size={16} />
@@ -42,10 +44,12 @@ function ProjectCard({
         {demoUrl && (
           <a
             href={demoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-1 text-sm text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
           >
             <ExternalLink size={16} />
-            演示
+            在线体验
           </a>
         )}
       </div>
@@ -66,10 +70,6 @@ export function Projects() {
             <ProjectCard key={project.name} {...project} />
           ))}
         </div>
-
-        <p className="mt-8 text-center text-sm text-gray-400">
-          以上为占位项目，真实项目信息待替换
-        </p>
       </AnimatedSection>
     </section>
   )

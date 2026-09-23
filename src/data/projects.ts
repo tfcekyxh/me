@@ -8,51 +8,34 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    name: '电商后台管理系统',
+    name: '五十音速成',
     description:
-      '基于 RBAC 的通用后台管理模板，支持用户、角色、权限管理以及商品、订单 CRUD',
+      '移动端优先的日语五十音学习工具，纯前端、零后端、可离线。46 个假名卡片带发音与 AI 速记口诀，28 个基础单词认读，随机测验按已学范围出题并自动记录错题；学习进度存在浏览器本地，关掉再打开还在。',
     techStack: [
-      'Spring Boot',
-      'Spring Security',
-      'MyBatis-Plus',
-      'MySQL',
-      'Redis',
-      'React',
-      'Ant Design',
+      'React 19',
+      'TypeScript',
+      'Vite',
+      'Tailwind CSS 4',
+      'IndexedDB',
+      'Vercel AI SDK',
     ],
-    githubUrl: '#',
-    demoUrl: '#',
+    githubUrl: 'https://github.com/tfcekyxh/jplearn',
+    demoUrl: 'https://tfcekyxh.github.io/jplearn/',
   },
   {
-    name: '接口开放平台',
+    name: '简历工作台',
     description:
-      '提供 API 注册、调用、限流、计费功能，开发者可自助接入',
+      '填内容即出稿的在线简历编辑器，省掉反复调 Word 样式的功夫。模块化编辑 + 拖拽排序，草稿自动保存、可存档版本随时回滚；粘贴文本或上传 docx / PDF 交给大模型解析后自动回填，一键导出 docx 与 PDF。',
     techStack: [
-      'Spring Boot',
-      'Spring Cloud Gateway',
-      'RabbitMQ',
-      'Docker',
-    ],
-    githubUrl: '#',
-  },
-  {
-    name: '个人博客系统',
-    description:
-      '支持 Markdown 编辑、标签分类、全文搜索的轻量博客',
-    techStack: [
-      'Spring Boot',
+      'React 19',
+      'TypeScript',
+      'Express',
+      'Prisma',
       'PostgreSQL',
-      'Elasticsearch',
-      'React',
-      'Tailwind CSS',
+      'Bun',
+      'Railway',
     ],
-    githubUrl: '#',
-    demoUrl: '#',
-  },
-  {
-    name: '实时数据看板',
-    description: '企业内部数据可视化看板，多数据源聚合展示',
-    techStack: ['React', 'ECharts', 'Spring Boot', 'WebSocket', 'Redis'],
-    githubUrl: '#',
+    githubUrl: 'https://github.com/tfcekyxh/myresume',
+    demoUrl: 'https://genresume.up.railway.app',
   },
 ]
