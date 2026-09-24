@@ -10,7 +10,7 @@ function ProjectCard({
   demoUrl,
 }: (typeof projects)[number]) {
   return (
-    <div className="rounded-xl border border-gray-200 bg-white p-6 transition-all hover:-translate-y-1 hover:shadow-md dark:border-gray-800 dark:bg-gray-900">
+    <div className="relative rounded-xl border border-gray-200 bg-white p-6 transition-all hover:-translate-y-1 hover:shadow-md dark:border-gray-800 dark:bg-gray-900">
       <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-gray-100">
         {name}
       </h3>
@@ -35,7 +35,7 @@ function ProjectCard({
             href={githubUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 text-sm text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
+            className="relative z-10 inline-flex items-center gap-1 text-sm text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
           >
             <Link2 size={16} />
             源码
@@ -46,13 +46,24 @@ function ProjectCard({
             href={demoUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 text-sm text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
+            className="relative z-10 inline-flex items-center gap-1 text-sm text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
           >
             <ExternalLink size={16} />
             在线体验
           </a>
         )}
       </div>
+
+      {/* 整卡可点：铺满卡片的透明链接，源码等内部链接用 z-10 浮在其上 */}
+      {demoUrl && (
+        <a
+          href={demoUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`在线体验 ${name}`}
+          className="absolute inset-0 rounded-xl"
+        />
+      )}
     </div>
   )
 }

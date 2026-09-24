@@ -3,8 +3,6 @@ import { Menu, X } from 'lucide-react'
 import { ThemeToggle } from './ThemeToggle'
 
 const NAV_ITEMS = [
-  { id: 'hero', label: '关于' },
-  { id: 'skills', label: '技能' },
   { id: 'projects', label: '项目' },
   { id: 'contact', label: '联系' },
 ]
@@ -36,7 +34,7 @@ export function Navbar() {
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <span className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-            六件套
+            靠枕
           </span>
 
           {/* desktop nav */}

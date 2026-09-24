@@ -28,10 +28,6 @@ export function Contact() {
             )
           })}
         </div>
-
-        <p className="mt-10 text-sm text-gray-400">
-          GitHub / LinkedIn 待补充
-        </p>
       </AnimatedSection>
     </section>
   )
