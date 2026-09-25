@@ -1,69 +1,88 @@
 import { ExternalLink, Link2 } from 'lucide-react'
 import { projects } from '../data/projects'
+import type { Project } from '../data/projects'
 import { AnimatedSection } from './AnimatedSection'
+import { DemoVideo } from './DemoVideo'
 
-function ProjectCard({
-  name,
-  description,
-  techStack,
-  githubUrl,
-  demoUrl,
-}: (typeof projects)[number]) {
+function ProjectLinks({ project }: { project: Project }) {
   return (
-    <div className="relative rounded-xl border border-gray-200 bg-white p-6 transition-all hover:-translate-y-1 hover:shadow-md dark:border-gray-800 dark:bg-gray-900">
-      <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-gray-100">
-        {name}
-      </h3>
-      <p className="mb-4 text-sm leading-relaxed text-gray-500 dark:text-gray-400">
-        {description}
-      </p>
-
-      <div className="mb-5 flex flex-wrap gap-1.5">
-        {techStack.map((tech) => (
-          <span
-            key={tech}
-            className="rounded-md bg-gray-100 px-2 py-0.5 text-xs text-gray-600 dark:bg-gray-800 dark:text-gray-400"
-          >
-            {tech}
-          </span>
-        ))}
-      </div>
-
-      <div className="flex gap-3">
-        {githubUrl && (
-          <a
-            href={githubUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="relative z-10 inline-flex items-center gap-1 text-sm text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
-          >
-            <Link2 size={16} />
-            源码
-          </a>
-        )}
-        {demoUrl && (
-          <a
-            href={demoUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="relative z-10 inline-flex items-center gap-1 text-sm text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
-          >
-            <ExternalLink size={16} />
-            在线体验
-          </a>
-        )}
-      </div>
-
-      {/* 整卡可点：铺满卡片的透明链接，源码等内部链接用 z-10 浮在其上 */}
-      {demoUrl && (
+    <div className="flex gap-3">
+      {project.githubUrl && (
         <a
-          href={demoUrl}
+          href={project.githubUrl}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label={`在线体验 ${name}`}
-          className="absolute inset-0 rounded-xl"
-        />
+          className="inline-flex items-center gap-1 text-sm text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
+        >
+          <Link2 size={16} />
+          源码
+        </a>
       )}
+      {project.demoUrl && (
+        <a
+          href={project.demoUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1 text-sm text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
+        >
+          <ExternalLink size={16} />
+          在线体验
+        </a>
+      )}
+    </div>
+  )
+}
+
+function ProjectCard({ project, reverse }: { project: Project; reverse?: boolean }) {
+  const isPortrait = project.orientation === 'portrait'
+
+  return (
+    <div className="rounded-xl border border-gray-200 bg-white p-5 transition-shadow hover:shadow-md dark:border-gray-800 dark:bg-gray-900 sm:p-8">
+      <div className="flex flex-col gap-6 md:flex-row md:items-center md:gap-10">
+        {/* 媒体栏：移动端在上、桌面端与文字左右并排；第二张卡桌面端换到右侧 */}
+        <figure
+          className={`flex shrink-0 flex-col items-center gap-2 md:w-[42%] ${
+            reverse ? 'md:order-2' : ''
+          }`}
+        >
+          <DemoVideo
+            src={project.clip.src}
+            poster={project.clip.poster}
+            ariaLabel={`${project.name} - ${project.clip.title}`}
+            className={
+              isPortrait
+                ? 'h-72 w-auto rounded-lg border border-gray-200 object-cover dark:border-gray-700 sm:h-80 md:h-[380px]'
+                : 'aspect-[3/2] w-full rounded-lg border border-gray-200 object-cover dark:border-gray-700'
+            }
+          />
+          <figcaption className="text-xs text-gray-400 dark:text-gray-500">
+            {project.clip.title}
+          </figcaption>
+        </figure>
+
+        {/* 文案栏 */}
+        <div className={`min-w-0 flex-1 ${reverse ? 'md:order-1' : ''}`}>
+          <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-gray-100">
+            {project.name}
+          </h3>
+          <p className="mb-4 text-sm leading-relaxed text-gray-500 dark:text-gray-400">
+            {project.description}
+          </p>
+
+          <div className="mb-5 flex flex-wrap gap-1.5">
+            {project.techStack.map((tech) => (
+              <span
+                key={tech}
+                className="rounded-md bg-gray-100 px-2 py-0.5 text-xs text-gray-600 dark:bg-gray-800 dark:text-gray-400"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+
+          <ProjectLinks project={project} />
+        </div>
+      </div>
     </div>
   )
 }
@@ -76,9 +95,9 @@ export function Projects() {
           项目作品
         </h2>
 
-        <div className="grid gap-6 md:grid-cols-2">
-          {projects.map((project) => (
-            <ProjectCard key={project.name} {...project} />
+        <div className="flex flex-col gap-6">
+          {projects.map((project, index) => (
+            <ProjectCard key={project.name} project={project} reverse={index % 2 === 1} />
           ))}
         </div>
       </AnimatedSection>

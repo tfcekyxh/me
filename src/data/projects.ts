@@ -1,10 +1,23 @@
+export interface ProjectClip {
+  /** 片段说明，用作视频 aria-label */
+  title: string
+  src: string
+  poster: string
+}
+
 export interface Project {
   name: string
   description: string
   techStack: string[]
   githubUrl?: string
   demoUrl?: string
+  /** 演示视频的画幅，决定卡片内媒体区的摆放方式 */
+  orientation: 'portrait' | 'landscape'
+  clip: ProjectClip
 }
+
+/** 部署在 GitHub Pages 子路径 /me/ 下，静态资源要拼上 base */
+const asset = (path: string) => `${import.meta.env.BASE_URL}demos/${path}`
 
 export const projects: Project[] = [
   {
@@ -21,6 +34,12 @@ export const projects: Project[] = [
     ],
     githubUrl: 'https://github.com/tfcekyxh/jplearn',
     demoUrl: 'https://tfcekyxh.github.io/jplearn/',
+    orientation: 'portrait',
+    clip: {
+      title: '卡片学习演示：翻卡、行筛选与 AI 口诀',
+      src: asset('jplearn/01-cards.mp4'),
+      poster: asset('jplearn/01-cards.poster.jpg'),
+    },
   },
   {
     name: '简历工作台',
@@ -37,5 +56,11 @@ export const projects: Project[] = [
     ],
     githubUrl: 'https://github.com/tfcekyxh/myresume',
     demoUrl: 'https://genresume.up.railway.app',
+    orientation: 'landscape',
+    clip: {
+      title: '核心编辑流演示：模块化编辑、拖拽排序与草稿自动保存',
+      src: asset('mymenu/01-editing.mp4'),
+      poster: asset('mymenu/01-editing.poster.jpg'),
+    },
   },
 ]
