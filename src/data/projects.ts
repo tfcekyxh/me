@@ -23,8 +23,15 @@ export interface Project {
   clips: ProjectClip[]
 }
 
-/** 部署在 GitHub Pages 子路径 /me/ 下，静态资源要拼上 base */
-const asset = (path: string) => `${import.meta.env.BASE_URL}demos/${path}`
+/**
+ * 视频与封面体积大，生产环境可放到对象存储 + CDN：
+ * 构建时通过 VITE_MEDIA_BASE 配置（必须以 / 结尾，如 https://cdn.example.com/demos/）。
+ * 未配置时回退到站点同源的 /me/demos/（本地开发与 e2e 走 public/demos）。
+ * 用 || 而不是 ??：未设置该变量时 Vite 会静态替换为空字符串。
+ */
+const mediaBase: string =
+  import.meta.env.VITE_MEDIA_BASE || `${import.meta.env.BASE_URL}demos/`
+const asset = (path: string) => `${mediaBase}${path}`
 const clip = (dir: string, id: string, title: string, description: string): ProjectClip => ({
   id,
   title,

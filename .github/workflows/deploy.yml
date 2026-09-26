@@ -13,6 +13,13 @@ concurrency:
   group: pages
   cancel-in-progress: true
 
+# R2 相关值全部走 repository secrets；未配置时跳过同步、构建回退同源 demos/，
+# 部署不会失败。需要配置：R2_ACCOUNT_ID / R2_ACCESS_KEY_ID /
+# R2_SECRET_ACCESS_KEY / R2_BUCKET / VITE_MEDIA_BASE（公开访问地址，以 /demos/ 结尾）
+env:
+  R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+  R2_BUCKET: ${{ secrets.R2_BUCKET }}
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -28,6 +35,23 @@ jobs:
 
       - run: bun install
       - run: bun run build
+        env:
+          # 视频/封面走 R2 + CDN；未配置此 secret 时自动回退到 GitHub Pages 同源资源
+          VITE_MEDIA_BASE: ${{ secrets.VITE_MEDIA_BASE }}
+
+      # 演示视频与封面同步到 Cloudflare R2（S3 兼容 API，ubuntu 自带 aws-cli）。
+      # 桶内目录 demos/ 与 public/demos 保持镜像，浏览器缓存 1 天。
+      - name: Sync demos to Cloudflare R2
+        if: env.R2_ACCOUNT_ID != '' && env.R2_BUCKET != ''
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: auto
+        run: |
+          aws s3 sync ./public/demos "s3://${R2_BUCKET}/demos" \
+            --endpoint-url "https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com" \
+            --delete \
+            --cache-control "public, max-age=86400"
 
       - uses: actions/configure-pages@v5
 

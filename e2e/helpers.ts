@@ -21,18 +21,18 @@ const BASE_PATH = '/me'
 /**
  * 从业务源文件 src/data/projects.ts 加载 projects 数据。
  *
- * 不能直接 import：该文件用了 Vite 专有的 import.meta.env.BASE_URL，
+ * 不能直接 import：该文件用了 Vite 专有的 import.meta.env.*，
  * Playwright 用例跑在 Node 下 import.meta.env 为 undefined，取值即抛错。
- * 这里把源码中的 BASE_URL 按 vite.config.ts 的 base 常量替换后做一次
- * TS -> CJS 转译，放进 vm 求值。业务事实（项目名 / 链接 / 片段等）
- * 仍然只有 src/data/projects.ts 这一个来源。
+ * 这里把源码中的 VITE_MEDIA_BASE 替换为 undefined（e2e 走本地 dev，
+ * 资源必须回退到同源 /me/demos/），BASE_URL 按 vite.config.ts 的 base
+ * 常量替换，再做一次 TS -> CJS 转译，放进 vm 求值。业务事实（项目名 /
+ * 链接 / 片段等）仍然只有 src/data/projects.ts 这一个来源。
  */
 function loadProjects(): Project[] {
   const sourcePath = fileURLToPath(new URL('../src/data/projects.ts', import.meta.url))
-  const source = readFileSync(sourcePath, 'utf8').replace(
-    'import.meta.env.BASE_URL',
-    '"/me/"',
-  )
+  const source = readFileSync(sourcePath, 'utf8')
+    .replace('import.meta.env.VITE_MEDIA_BASE', 'undefined')
+    .replace('import.meta.env.BASE_URL', '"/me/"')
   const { outputText } = ts.transpileModule(source, {
     compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
   })
