@@ -38,6 +38,15 @@ src/
 - 不引入状态管理 — 纯静态展示无跨组件状态
 - 后续页面变多时再按需引入路由和组件库
 
+## CDN 与部署（演示视频 / 封面）
+
+- 体积大的媒体（`public/demos/` 下 7 个 mp4 + poster）走 **Cloudflare R2 + CDN**，页面本体仍部署在 GitHub Pages（`.github/workflows/deploy.yml`）。
+- **媒体地址只有一个出口**：`src/data/projects.ts` 的 `asset()`。基址取构建期变量 `VITE_MEDIA_BASE`（必须以 `/` 结尾，如 `https://pub-xxxx.r2.dev/demos/`），未配置时回退同源 `${BASE_URL}demos/`——本地 dev 与 e2e 都走回退，不要在代码里硬编码 CDN 域名。
+- **CI 同步**：deploy.yml 用 `aws s3 sync ./public/demos s3://$R2_BUCKET/demos --endpoint-url https://$R2_ACCOUNT_ID.r2.cloudflarestorage.com --delete --cache-control "public, max-age=86400"`（R2 S3 兼容 API，region 固定 `auto`）。新增/改名视频文件后随 push 自动镜像，不要手工传。
+- **Secrets（仓库 Settings → Repository secrets）**：`R2_ACCOUNT_ID`、`R2_ACCESS_KEY_ID`、`R2_SECRET_ACCESS_KEY`（R2 专用 API Token：Object Read & Write、限定本桶；AK 32 位 / SK 64 位，注意不要把 JWT 当 SK）、`R2_BUCKET=github-me`、`VITE_MEDIA_BASE`。密钥缺失时同步步骤自动跳过、构建回退同源，不阻断部署。
+- 桶需开启公开访问（Public Development URL 的 r2.dev，或绑自定义域），否则 CI 能上传但播放 403。
+- 想本地验证 CDN：在项目根建 `.env.local`（已被 `*.local` 忽略）写 `VITE_MEDIA_BASE=...`，重启 `bun dev`；不要提交 `.env*`。
+
 ## E2E 测试
 
 - 框架：Playwright（`@playwright/test`，devDependency）。测试在 `e2e/`，配置在 `playwright.config.ts`。
@@ -47,7 +56,7 @@ src/
 - **复用系统 Chrome**：配置用 `channel: 'chrome'`，不下载 Playwright 自带 Chromium。
 - **专用端口 5198**（`E2E_PORT` / `E2E_BASE_URL` 可覆盖）：本机常同时开多个 Vite 项目（jplearn 占 5199），固定端口避免 webServer 健康检查把别的项目误当成本应用。baseURL 为 `http://localhost:5198/me/`，**必须带 base 路径**；用例内一律走 `e2e/helpers.ts` 的 `openHome` / `openShowcase`，不要裸 `goto`。`reuseExistingServer: true`，dev 已起则复用。
 - **串行执行**：`workers: 1`，视频播放/滚动类用例共享页面时序语义，串行更稳。
-- **业务事实不手抄**：spec 中的项目名、链接、clip 标题一律取自 `src/data/projects.ts`（经 `helpers.ts` 的 `projects` 透出）。该文件含 Vite 专有的 `import.meta.env.BASE_URL`，Node 下不能直接 import，helper 用 TS 转译 + vm 求值加载（替换为 `"/me/"`）；改数据源后 e2e 自动跟随。
+- **业务事实不手抄**：spec 中的项目名、链接、clip 标题一律取自 `src/data/projects.ts`（经 `helpers.ts` 的 `projects` 透出）。该文件含 Vite 专有的 `import.meta.env.*`，Node 下不能直接 import，helper 用 TS 转译 + vm 求值加载（`VITE_MEDIA_BASE` 替换为 `undefined` 走同源回退、`BASE_URL` 替换为 `"/me/"`，替换顺序不能反）；改数据源后 e2e 自动跟随。
 - **DemoVideo 断言约定**：
   - 有无 `src` 必须读 HTML 属性 `getAttribute('src')`——无属性时 DOM property `.src` 会回退为页面 URL。
   - 播放/暂停/续播一律用 `expect.poll` 读真实 `paused` / `currentTime`，禁止固定 sleep；离屏视频用 `scrollElementToCenter`（瞬时滚动）驱动，不用平滑滚动。
