@@ -1,4 +1,4 @@
-import { ExternalLink, Link2 } from 'lucide-react'
+import { ExternalLink, Link2, PlayCircle } from 'lucide-react'
 import { projects } from '../data/projects'
 import type { Project } from '../data/projects'
 import { AnimatedSection } from './AnimatedSection'
@@ -7,6 +7,13 @@ import { DemoVideo } from './DemoVideo'
 function ProjectLinks({ project }: { project: Project }) {
   return (
     <div className="flex gap-3">
+      <a
+        href={`${import.meta.env.BASE_URL}showcase/${project.slug}.html`}
+        className="inline-flex items-center gap-1 text-sm text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
+      >
+        <PlayCircle size={16} />
+        示例展示
+      </a>
       {project.githubUrl && (
         <a
           href={project.githubUrl}
@@ -46,9 +53,9 @@ function ProjectCard({ project, reverse }: { project: Project; reverse?: boolean
           }`}
         >
           <DemoVideo
-            src={project.clip.src}
-            poster={project.clip.poster}
-            ariaLabel={`${project.name} - ${project.clip.title}`}
+            src={project.clips[0].src}
+            poster={project.clips[0].poster}
+            ariaLabel={`${project.name} - ${project.clips[0].title}`}
             className={
               isPortrait
                 ? 'h-72 w-auto rounded-lg border border-gray-200 object-cover dark:border-gray-700 sm:h-80 md:h-[380px]'
@@ -56,7 +63,7 @@ function ProjectCard({ project, reverse }: { project: Project; reverse?: boolean
             }
           />
           <figcaption className="text-xs text-gray-400 dark:text-gray-500">
-            {project.clip.title}
+            {project.clips[0].title}
           </figcaption>
         </figure>
 

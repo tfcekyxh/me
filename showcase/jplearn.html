@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <script>
+      // Prevent theme flash
+      (function(){
+        var t = localStorage.getItem('theme');
+        if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>五十音速成 · 功能演示 - 靠枕</title>
+    <meta name="description" content="移动端优先的日语五十音学习工具：假名卡片带发音与 AI 速记口诀、随机测验、单词拼读，纯前端可离线。功能演示页。" />
+  </head>
+  <body>
+    <div id="root" data-slug="jplearn"></div>
+    <script type="module" src="../src/showcase/main.tsx"></script>
+  </body>
+</html>
