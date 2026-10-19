@@ -12,6 +12,8 @@ export default defineConfig({
         main: new URL('./index.html', import.meta.url).pathname,
         jplearn: new URL('./showcase/jplearn.html', import.meta.url).pathname,
         mymenu: new URL('./showcase/mymenu.html', import.meta.url).pathname,
+        myinterviewquestion: new URL('./showcase/myinterviewquestion.html', import.meta.url)
+          .pathname,
       },
     },
   },

@@ -122,6 +122,48 @@ export const projects: Project[] = [
       ),
     ],
   },
+  {
+    slug: 'myinterviewquestion',
+    name: '面试题速记',
+    description:
+      '把题库 PDF 变成手机上能一道一道背的卡片。上传 PDF 自动按版式切成题目入库，题答同屏翻卡，顺序 / 随机随时切换；进度存在服务端，换台设备登录也能接着背。复习模式把答案藏起来，对着题目开口讲并录音，讲完再点开答案对照，AI 还会顺手提炼每题的「回答重点」。',
+    techStack: ['React 19', 'TypeScript', 'Vite', 'Express', 'SQLite', 'pdf.js', 'PWA'],
+    githubUrl: 'https://github.com/tfcekyxh/myinterviewquestion',
+    demoUrl: 'https://interview-flashcards-29811.app.workbuddy.host/',
+    orientation: 'portrait',
+    clips: [
+      clip(
+        'myinterviewquestion',
+        '01-login-home',
+        '登录与首页',
+        '单账号登录后进首页，进度卡一眼看到「已背 18/60」，接着上次的位置继续往下背。',
+      ),
+      clip(
+        'myinterviewquestion',
+        '02-import',
+        'PDF 导入题库',
+        '上传题库 PDF，按版式自动切成题目并解析入库；先确认解析结果，再整批替换旧题库。',
+      ),
+      clip(
+        'myinterviewquestion',
+        '03-recite',
+        '背诵：翻卡 · 自动阅读 · AI 重点',
+        '题答同屏翻卡，顺序 / 随机随时切换；可开自动阅读朗读题干与答案，AI 顺手提炼「回答重点」，进度存服务端、刷新不丢。',
+      ),
+      clip(
+        'myinterviewquestion',
+        '04-review',
+        '复习：开口讲 · 对照答案',
+        '答案先不进 DOM，对着题目开口讲并录音；讲完点开答案对照、回放自己的录音，翻下一题答案重新藏起。',
+      ),
+      clip(
+        'myinterviewquestion',
+        '05-clips-bank',
+        '我的录音与题库管理',
+        '录音只存本机、无语音上传，可逐条回听并导出；题库管理里能把整库导出成 JSON，换设备导入即还原。',
+      ),
+    ],
+  },
 ]
 
 export function getProject(slug: string) {

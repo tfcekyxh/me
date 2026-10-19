@@ -13,8 +13,8 @@ import type { Project } from '../src/data/projects'
  * - 指定资源（mp4）的网络请求次数统计
  */
 
-/** showcase 页 slug，只有这两个静态页面（路由事实，非业务展示数据） */
-export type ShowcaseSlug = 'jplearn' | 'mymenu'
+/** showcase 页 slug，对应构建出的静态页面（路由事实，非业务展示数据） */
+export type ShowcaseSlug = 'jplearn' | 'mymenu' | 'myinterviewquestion'
 
 const BASE_PATH = '/me'
 

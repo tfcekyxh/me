@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <script>
+      // Prevent theme flash
+      (function(){
+        var t = localStorage.getItem('theme');
+        if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>面试题速记 · 功能演示 - 靠枕</title>
+    <meta name="description" content="把题库 PDF 变成手机上一道一道背的卡片：PDF 导入解析、题答同屏翻卡、顺序/随机背诵、复习开口讲并录音、AI 提炼回答重点。功能演示页。" />
+  </head>
+  <body>
+    <div id="root" data-slug="myinterviewquestion"></div>
+    <script type="module" src="../src/showcase/main.tsx"></script>
+  </body>
+</html>

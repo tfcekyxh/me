@@ -4,12 +4,15 @@ import { openHome, openShowcase, projectCard, projects, type ShowcaseSlug } from
 // iPhone 12/13/14 逻辑分辨率：390x844，项目以 375-430px 为移动端设计目标
 test.use({ viewport: { width: 390, height: 844 } })
 
-test('手机视口下首页与两个示例展示页均无横向溢出', async ({ page }) => {
-  // 每页等待一个用户可见的标志性元素，确认页面真正渲染完成再测量
+test('手机视口下首页与全部示例展示页均无横向溢出', async ({ page }) => {
+  // 每页等待一个用户可见的标志性元素，确认页面真正渲染完成再测量；
+  // 展示页从业务数据派生，新增项目自动纳入，不手抄 slug
   const pages: Array<{ slug: ShowcaseSlug | null; marker: string }> = [
     { slug: null, marker: '项目作品' },
-    { slug: 'jplearn', marker: projects[0].name },
-    { slug: 'mymenu', marker: projects[1].name },
+    ...projects.map((project) => ({
+      slug: project.slug as ShowcaseSlug,
+      marker: project.name,
+    })),
   ]
 
   for (const item of pages) {

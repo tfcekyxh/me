@@ -7,7 +7,7 @@ test.beforeEach(async ({ page }) => {
   await openHome(page)
 })
 
-test('首页展示品牌、两个项目、联系方式与当前年份页脚', async ({ page }) => {
+test('首页展示品牌、三个项目、联系方式与当前年份页脚', async ({ page }) => {
   // 导航栏品牌
   await expect(page.locator('nav').getByText('靠枕', { exact: true })).toBeVisible()
 
@@ -15,7 +15,7 @@ test('首页展示品牌、两个项目、联系方式与当前年份页脚', as
   await expect(page.getByRole('heading', { name: '项目作品', level: 2 })).toBeVisible()
   await expect(page.getByRole('heading', { name: '联系方式', level: 2 })).toBeVisible()
 
-  // 两张项目卡的 h3 项目名（名称取自业务数据，不手抄）
+  // 三张项目卡的 h3 项目名（名称取自业务数据，不手抄）
   for (const project of projects) {
     await expect(page.getByRole('heading', { name: project.name, level: 3 })).toBeVisible()
   }

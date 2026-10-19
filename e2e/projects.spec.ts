@@ -5,7 +5,7 @@ import { openHome, openShowcase, projectCard, projects, type ShowcaseSlug } from
 
 const slugs = projects.map((project) => project.slug) as ShowcaseSlug[]
 
-test('两张项目卡展示各自的全部技术栈标签', async ({ page }) => {
+test('三张项目卡展示各自的全部技术栈标签', async ({ page }) => {
   await openHome(page)
 
   for (const project of projects) {
@@ -16,7 +16,7 @@ test('两张项目卡展示各自的全部技术栈标签', async ({ page }) => 
   }
 })
 
-test('两张项目卡的源码 / 在线体验链接地址与新标签属性正确', async ({ page }) => {
+test('三张项目卡的源码 / 在线体验链接地址与新标签属性正确', async ({ page }) => {
   await openHome(page)
 
   // 只断言链接属性，不实际打开站外地址
@@ -44,7 +44,7 @@ test('点击第一张卡的「示例展示」进入 jplearn 展示页', async ({
   await expect(page.getByRole('heading', { name: '五十音速成', level: 1 })).toBeVisible()
 })
 
-test('两个展示页渲染正确的 h1、片段小节标题、视频数量与 aria-label、title', async ({ page }) => {
+test('三个展示页渲染正确的 h1、片段小节标题、视频数量与 aria-label、title', async ({ page }) => {
   for (const slug of slugs) {
     const project = projects.find((item) => item.slug === slug)!
 
@@ -67,7 +67,7 @@ test('两个展示页渲染正确的 h1、片段小节标题、视频数量与 a
   }
 })
 
-test('两个展示页的「返回首页」链接指向 /me/ 且能回到首页', async ({ page }) => {
+test('三个展示页的「返回首页」链接指向 /me/ 且能回到首页', async ({ page }) => {
   for (const slug of slugs) {
     await openShowcase(page, slug)
 
@@ -80,7 +80,7 @@ test('两个展示页的「返回首页」链接指向 /me/ 且能回到首页',
   }
 })
 
-test('两个展示页的主题切换按钮可正常切换暗 / 亮色', async ({ page }) => {
+test('三个展示页的主题切换按钮可正常切换暗 / 亮色', async ({ page }) => {
   for (const slug of slugs) {
     await openShowcase(page, slug)
 
