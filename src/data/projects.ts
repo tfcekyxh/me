@@ -129,7 +129,7 @@ export const projects: Project[] = [
       '把题库 PDF 变成手机上能一道一道背的卡片。上传 PDF 自动按版式切成题目入库，题答同屏翻卡，顺序 / 随机随时切换；进度存在服务端，换台设备登录也能接着背。复习模式把答案藏起来，对着题目开口讲并录音，讲完再点开答案对照，AI 还会顺手提炼每题的「回答重点」。',
     techStack: ['React 19', 'TypeScript', 'Vite', 'Express', 'SQLite', 'pdf.js', 'PWA'],
     githubUrl: 'https://github.com/tfcekyxh/myinterviewquestion',
-    demoUrl: 'https://interview-flashcards-29811.app.workbuddy.host/',
+    demoUrl: 'https://interview-flashcards-29811.app.workbuddy.host/?sharecode=YKSVP2VYKA',
     orientation: 'portrait',
     clips: [
       clip(
