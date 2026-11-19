@@ -37,6 +37,7 @@ src/
 - 不引入组件库（shadcn/ui、Ant Design）— 手写原生组件更轻量
 - 不引入状态管理 — 纯静态展示无跨组件状态
 - 后续页面变多时再按需引入路由和组件库
+- 首页视觉方向已定：**方向 B — Bento 网格**（zinc 灰底 `#F4F4F5`、卡片边框 `#E4E4E7`、移动优先 375×812，桌面端 ≥768px 转两栏）。三套候选方案（A 编辑式极简 / B Bento / C 暗色终端）中选定，A、C 保留为备选。
 
 ## CDN 与部署（演示视频 / 封面）
 
@@ -68,6 +69,15 @@ src/
 - **不实际打开外链**：GitHub / 在线体验链接只断言 href、`target=_blank`、`rel` 含 `noopener`。
 - eslint 中 `e2e/**/*.ts` 与 `playwright.config.ts` 单独挂 node globals 段；e2e 不参与 `tsc -b`（tsconfig 只 include `src`），由 Playwright 自行转译，无需新建 tsconfig。
 - 新增/改动功能时按现有 spec 分工补用例：`home`（内容/锚点/导航栏）、`theme`（主题）、`projects`（卡片与展示页/链接）、`video`（懒加载与播放策略）、`mobile`（390×844 视口）。
+
+## Git 推送与代理环境
+
+- 仓库走 HTTPS remote（`https://github.com/tfcekyxh/me.git`），push 到 `main` 会触发 `.github/workflows/deploy.yml` 自动构建并部署 GitHub Pages。
+- **代理坑**：`~/.gitconfig` 里配了 GitHub 专属代理 `http.https://github.com.proxy=http://127.0.0.1:65532`（VPN 系统代理），但该端口 TLS 握手失败，直接 `git push` 会报 `fatal: unable to access ... TLS connect error: error:00000000`。环境变量里注入的 `HTTPS_PROXY`（如 `127.0.0.1:56548`）才是可用的。
+- 推送时用一次性覆盖，不改全局配置：
+  `git -c http.https://github.com.proxy=http://127.0.0.1:56548 push origin main`
+- 代理端口会随环境变化：**以当前 `env | grep -i proxy` 里的 `HTTPS_PROXY` 为准**，不要死记 56548。诊断连通性：`curl --proxy http://127.0.0.1:<端口> -o /dev/null -w "%{http_code}" https://github.com`，返回 200 才可用。
+- 工作区里 `.workbuddy/` 是本地记忆数据，已在 `.gitignore` 中忽略，不要提交。
 
 ## Implementation phases
 
